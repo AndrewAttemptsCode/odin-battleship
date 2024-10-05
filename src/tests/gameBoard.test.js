@@ -1,14 +1,3 @@
-// Gameboards should have a receiveAttack method that takes a pair
-// of coordinates, determines whether or not the attack hit a ship 
-// and then sends the ‘hit’ method to the correct ship, or records 
-// the coordinates of the missed shot.
-
-// Gameboards should keep track of missed attacks so they can 
-// display them properly.
-
-// Gameboards should be able to report whether or not all of their 
-// ships have been sunk.
-
 import GameBoard from "../modules/gameBoard";
 import Ship from "../modules/ship";
 
@@ -101,12 +90,65 @@ describe('Gameboard receiveAttack method', () => {
     const board = new GameBoard();
     board.placeShip(3, 3, 3, 'horizontal');
     board.receiveAttack(3, 3);
-    board.receiveAttack(3, 3);
+    board.receiveAttack(3, 4);
     const ship = board.grid[3][3];
     expect(ship.hits).toBe(2);
   })
 
-  test.skip('Prevents hitting the same cell more than once', () => {
-    // to do - prevent hitting same cell to sink a ship
+  test('Prevents hitting the same cell more than once', () => {
+    const board = new GameBoard();
+    board.placeShip(3, 3, 3, 'horizontal');
+    board.receiveAttack(3, 3);
+    board.receiveAttack(3, 3);
+    const ship = board.grid[3][3];
+    expect(ship.hits).toBe(1);
+  })
+
+})
+
+describe('Gameboard areAllShipsSunk method', () => {
+  test('All ships sunk', () => {
+    const board = new GameBoard();
+    board.placeShip(3, 3, 3, 'horizontal');
+    board.receiveAttack(3, 3);
+    board.receiveAttack(3, 4);
+    board.receiveAttack(3, 5);
+    expect(board.areAllShipsSunk()).toBe(true);
+  })
+
+  test('Not all ships sunk', () => {
+    const board = new GameBoard();
+    board.placeShip(3, 3, 3, 'horizontal');
+    board.placeShip(5, 5, 3, 'vertical');
+    board.receiveAttack(3, 3);
+    board.receiveAttack(3, 4);
+    expect(board.areAllShipsSunk()).toBe(false);
+  })
+
+  test('No ships placed', () => {
+    const board = new GameBoard();
+    expect(board.areAllShipsSunk()).toBe(true);
+  })
+
+  test('Multiple ships, all sunk', () => {
+    const board = new GameBoard();
+    board.placeShip(3, 3, 3, 'horizontal');
+    board.placeShip(5, 5, 3, 'vertical');
+    board.receiveAttack(3, 3);
+    board.receiveAttack(3, 4);
+    board.receiveAttack(3, 5);
+    board.receiveAttack(5, 5);
+    board.receiveAttack(6, 5);
+    board.receiveAttack(7, 5);
+    expect(board.areAllShipsSunk()).toBe(true);
+  })
+
+  test('Missed attacks only', () => {
+    const board = new GameBoard();
+    board.placeShip(3, 3, 3, 'horizontal');
+    board.receiveAttack(4, 4);
+    board.receiveAttack(8, 2);
+    board.receiveAttack(4, 2);
+    expect(board.areAllShipsSunk()).toBe(false);
   })
 })
