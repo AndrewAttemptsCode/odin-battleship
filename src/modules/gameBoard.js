@@ -3,6 +3,9 @@ import Ship from "./ship";
 export default class GameBoard {
   constructor() {
     this.grid = this.createGrid();
+    this.missedAttacks = new Set();
+    this.hitAttacks = new Set();
+    this.ships = new Set();
   }
 
   createGrid() {
@@ -39,6 +42,7 @@ export default class GameBoard {
       for (let i = 0; i < shipLength; i++) {
         this.grid[row][col + i] = ship;
       }
+      this.ships.add(ship);
     }
 
     else if (direction === 'vertical') {
@@ -58,18 +62,36 @@ export default class GameBoard {
       for (let i = 0; i < shipLength; i++) {
         this.grid[row + i][col] = ship;
       }
+      this.ships.add(ship);
     } 
   }
 
   receiveAttack(row, col) {
+    const gridCell = `${row}, ${col}`;
+
+    if (this.missedAttacks.has(gridCell) || this.hitAttacks.has(gridCell)) {
+      return false;
+    }
+
     if (this.grid[row][col] !== null) {
       const ship = this.grid[row][col];
       ship.hit();
+      this.hitAttacks.add(gridCell);
       if (ship.isSunk()) {
         return true; // confirmed sunk
       }
       return true; // confirmed hit
     }
+    this.missedAttacks.add(gridCell);
     return false; // confirmed miss
+  }
+
+  areAllShipsSunk() {
+    for (const ship of this.ships) {
+      if (!ship.isSunk()) {
+        return false; // return false if not all ships sunk
+      }
+    }
+    return true; // return true if all ships are sunk
   }
 }
