@@ -1,4 +1,4 @@
-export function renderBoard(boardElement, board, isPlayerBoard) {
+export function renderBoard(boardElement, board, isPlayerBoard, handleCellClick) {
   boardElement.innerHTML = '';
 
   for (let row = 0; row < board.grid.length; row++) {
@@ -14,7 +14,7 @@ export function renderBoard(boardElement, board, isPlayerBoard) {
 
       if (!isPlayerBoard) {
         cell.addEventListener('click', () => {
-          handleAttack(row, col);
+          if (handleCellClick) handleCellClick(row, col);
         });
       }
       
