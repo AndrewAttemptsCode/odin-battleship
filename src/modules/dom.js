@@ -22,3 +22,11 @@ export function renderBoard(boardElement, board, isPlayerBoard, handleCellClick)
     }
   }
 }
+
+// paint player / computer miss marker to the board
+// paint player / computer hit marker to the board
+// paint ship is sunk to the board
+// wip
+export function renderAttack(board, row, col) {
+  // to do
+}
