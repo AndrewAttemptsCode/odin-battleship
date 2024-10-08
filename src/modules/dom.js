@@ -17,16 +17,27 @@ export function renderBoard(boardElement, board, isPlayerBoard, handleCellClick)
           if (handleCellClick) handleCellClick(row, col);
         });
       }
+
+      renderAttack(cell, board, row, col);
       
       boardElement.appendChild(cell);
     }
   }
 }
 
-// paint player / computer miss marker to the board
-// paint player / computer hit marker to the board
-// paint ship is sunk to the board
-// wip
-export function renderAttack(board, row, col) {
-  // to do
+function renderAttack(cell, board, row, col) {
+  const position = `${row}, ${col}`;
+
+  if (board.hitAttacks.has(position)) {
+    const hitMarker = document.createElement('div');
+    hitMarker.classList.add('hit-marker');
+    cell.appendChild(hitMarker);
+    if (board.grid[row][col].isSunk()) {
+      cell.classList.add('sunk');
+    }
+  } else if (board.missedAttacks.has(position)) {
+    const missMarker = document.createElement('div');
+    missMarker.classList.add('miss-marker');
+    cell.appendChild(missMarker);
+  }
 }
