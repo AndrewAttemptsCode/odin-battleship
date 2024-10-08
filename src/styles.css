@@ -50,7 +50,12 @@ p, h1, h2, h3, h4, h5, h6 {
   height: 400px;
 }
 
+/* Markers */
+
 .cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 40px;
   height: 40px;
   border: 1px solid black;
@@ -58,4 +63,24 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .ship {
   background: rgba(0, 0, 255, 0.5);
+}
+
+.hit-marker {
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  padding-bottom: 50%;
+  background: red;
+}
+
+.miss-marker {
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  padding-bottom: 50%;
+  background: grey;
+}
+
+.sunk {
+  background: red;
 }
