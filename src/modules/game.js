@@ -1,4 +1,4 @@
-import { renderAttack } from "./dom";
+import { renderBoard } from "./dom";
 import Player from "./player";
 
 export default class Game {
@@ -8,7 +8,12 @@ export default class Game {
   }
 
   playerAttack(row, col) {
-      this.computer.board.receiveAttack(row, col);
+    if (this.computer.board.missedAttacks.has(`${row}, ${col}`) || this.computer.board.hitAttacks.has(`${row}, ${col}`)) {
+      return false;
+    }
+    
+    this.computer.board.receiveAttack(row, col);
+    return true;
   }
 
   computerAttack() {
@@ -24,24 +29,37 @@ export default class Game {
     
   checkGameOver() {
     if (this.computer.board.areAllShipsSunk()) {
-      alert('You win, all enemy ships are sunk!');
+      alert('You win, all enemy ships are sunk!'); // placeholders for now - change to dom element func.
       return true;
     } else if (this.player.board.areAllShipsSunk()) {
-      alert('You lose, all your ships are sunk!');
+      alert('You lose, all your ships are sunk!'); // placeholders for now - change to dom element func.
       return true;
     }
     return false;
   }
 
   handleCellClick(row, col) {
-    this.playerAttack(row, col);
+    if (this.checkGameOver()) return;
+
+    if (!this.playerAttack(row, col)) {
+      console.log('Invalid move: cell already attacked, pick again.');
+      return;
+    }
+
     console.log("Player attacked:", row, col);
-    // renderAttack(row, col); // wip
+
+    renderBoard(document.querySelector('#player-board'), this.player.board, true);
+    renderBoard(document.querySelector('#computer-board'), this.computer.board, false, this.handleCellClick.bind(this));
+
     if (this.checkGameOver()) return;
     
     this.computerAttack();
     console.log("Computer attacked");
-    this.checkGameOver();
+    
+    renderBoard(document.querySelector('#player-board'), this.player.board, true);
+    renderBoard(document.querySelector('#computer-board'), this.computer.board, false, this.handleCellClick.bind(this));
+
+    if (this.checkGameOver()) return;
   }
 
   resetGame() {
