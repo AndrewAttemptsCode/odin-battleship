@@ -41,3 +41,17 @@ function renderAttack(cell, board, row, col) {
     cell.appendChild(missMarker);
   }
 }
+
+export function updateResultDisplay(result) {
+  const resultContainer = document.querySelector('.result-container');
+
+  resultContainer.className = 'result-container';
+
+  if (result === 'win') {
+    resultContainer.classList.add('win-result');
+    resultContainer.textContent = 'You win, all the enemy ships have been sunk!';
+  } else if (result === 'lose') {
+    resultContainer.classList.add('lose-result');
+    resultContainer.textContent = 'You lose, all of your ships have been sunk!';
+  }
+}
