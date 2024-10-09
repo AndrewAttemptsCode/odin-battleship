@@ -1,4 +1,4 @@
-import { renderBoard } from "./dom";
+import { renderBoard, updateResultDisplay } from "./dom";
 import Player from "./player";
 
 export default class Game {
@@ -29,10 +29,10 @@ export default class Game {
     
   checkGameOver() {
     if (this.computer.board.areAllShipsSunk()) {
-      alert('You win, all enemy ships are sunk!'); // placeholders for now - change to dom element func.
+      updateResultDisplay('win');
       return true;
     } else if (this.player.board.areAllShipsSunk()) {
-      alert('You lose, all your ships are sunk!'); // placeholders for now - change to dom element func.
+      updateResultDisplay('lose');
       return true;
     }
     return false;
