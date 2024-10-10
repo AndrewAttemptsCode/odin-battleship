@@ -43,6 +43,7 @@ export default class GameBoard {
         this.grid[row][col + i] = ship;
       }
       this.ships.add(ship);
+      return true;
     }
 
     else if (direction === 'vertical') {
@@ -63,6 +64,7 @@ export default class GameBoard {
         this.grid[row + i][col] = ship;
       }
       this.ships.add(ship);
+      return true;
     } 
   }
 
