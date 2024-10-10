@@ -62,6 +62,29 @@ export default class Game {
     if (this.checkGameOver()) return;
   }
 
+  randomizeShips(user) {
+    const shipSizes = [5, 4, 3, 3, 2];
+    const orientations = ['vertical', 'horizontal'];
+    let row, col, orientationIndex, orientation;
+
+    for (const shipSize of shipSizes) {
+      let shipPlaced = false;
+
+      while (!shipPlaced) {
+        try {
+          row = Math.floor(Math.random() * 10);
+          col = Math.floor(Math.random() * 10);
+          orientationIndex = Math.floor(Math.random() * 2);
+          orientation = orientations[orientationIndex];
+  
+          shipPlaced = user.board.placeShip(row, col, shipSize, orientation);
+        } catch (error) {
+          shipPlaced = false;
+        }
+      }
+    }
+  }
+
   resetGame() {
     // reset logic tba
   }
