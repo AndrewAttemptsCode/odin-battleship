@@ -123,3 +123,39 @@ p, h1, h2, h3, h4, h5, h6 {
 .lose-result {
   color: red;
 }
+
+/* Options buttons */
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  font-family: 'Bungee Tint', sans-serif;
+}
+
+.randomize,
+.restart-game {
+  border: 3px solid;
+  background: transparent;
+  width: 200px;
+  cursor: pointer;
+}
+
+.randomize {
+  border-color: orange;
+}
+
+.restart-game {
+  border-color: green;
+}
+
+.randomize:hover {
+  background-color: rgba(255, 185, 0, 0.5);
+}
+
+.restart-game:hover {
+  background-color: rgba(15, 130, 0, 0.5);
+}
