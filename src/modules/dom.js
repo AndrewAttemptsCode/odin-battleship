@@ -55,3 +55,37 @@ export function updateResultDisplay(result) {
     resultContainer.textContent = 'You lose, all of your ships have been sunk!';
   }
 }
+
+export function renderOptions(game) {
+  const optionsContainer = document.querySelector('.options-container');
+  const randomize = document.createElement('button');
+  randomize.classList.add('randomize');
+  randomize.textContent = 'Randomize';
+  optionsContainer.appendChild(randomize);
+
+  const restartGame = document.createElement('button');
+  restartGame.classList.add('restart-game');
+  restartGame.textContent = 'Restart';
+  optionsContainer.appendChild(restartGame);
+
+  randomize.addEventListener('click', () => {
+    resetHandler(game);
+  })
+
+  restartGame.addEventListener('click', () => {
+    resetHandler(game);
+  })
+}
+
+function resetHandler(game) {
+  game.resetGame();
+
+  game.randomizeShips(game.player);
+  game.randomizeShips(game.computer);
+
+  const playerBoardElement = document.querySelector('#player-board');
+  const computerBoardElement = document.querySelector('#computer-board');
+
+  renderBoard(playerBoardElement, game.player.board, true);
+  renderBoard(computerBoardElement, game.computer.board, false, game.handleCellClick.bind(game));
+}
