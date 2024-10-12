@@ -1,11 +1,13 @@
 import './styles.css';
-import { renderBoard } from "./modules/dom";
+import { renderBoard, renderOptions } from "./modules/dom";
 import Game from './modules/game';
 
 const game = new Game();
 
 game.randomizeShips(game.player);
 game.randomizeShips(game.computer);
+
+renderOptions(game);
 
 const playerBoardElement = document.querySelector('#player-board');
 const computerBoardElement = document.querySelector('#computer-board');
