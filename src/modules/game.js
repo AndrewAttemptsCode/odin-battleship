@@ -86,6 +86,19 @@ export default class Game {
   }
 
   resetGame() {
-    // reset logic tba
+    this.player.board.hitAttacks.clear();
+    this.player.board.missedAttacks.clear();
+    this.player.board.ships.clear();
+
+    this.computer.board.hitAttacks.clear();
+    this.computer.board.missedAttacks.clear();
+    this.computer.board.ships.clear();
+
+    this.player.board.grid = this.player.board.createGrid();
+    this.computer.board.grid = this.computer.board.createGrid();
+
+    const resultContainer = document.querySelector('.result-container');
+    resultContainer.className = 'result-container';
+    resultContainer.textContent = '';
   }
 }
